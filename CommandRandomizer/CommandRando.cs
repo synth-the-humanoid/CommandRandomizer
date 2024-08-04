@@ -5,8 +5,11 @@ namespace CommandRandomizer
 {
     public class CommandRando : KHMod
     {
+        private KHCommand[] originalOrder;
+        private const int commandSize = 0x7C;
         public CommandRando(ModInterface mi) : base(mi)
         {
+            originalOrder = new KHCommand[commandSize];
             if (!isDivingInHeart())
             {
                 shuffleCommands();
@@ -26,9 +29,8 @@ namespace CommandRandomizer
             return World.Current(modInterface.dataInterface).WorldID == 0;
         }
 
-        private void shuffleCommands(int commandCount=0x7C)
+        private void shuffleCommands()
         {
-            KHCommand[] originalOrder = new KHCommand[commandCount];
             for(int i = 0; i<originalOrder.Length; i++)
             {
                 originalOrder[i] = KHCommand.FromID(modInterface.dataInterface, i);
